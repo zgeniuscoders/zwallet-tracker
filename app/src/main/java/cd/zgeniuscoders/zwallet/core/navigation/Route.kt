@@ -9,6 +9,9 @@ sealed interface Route {
     data object MainPage: Route
 
     @Serializable
+    data object SplashScreen: Route
+
+    @Serializable
     data object Dashboard: Route
 
     @Serializable

@@ -11,6 +11,7 @@ import cd.zgeniuscoders.zwallet.auth.presentation.forgot_password.ForgotPassword
 import cd.zgeniuscoders.zwallet.auth.presentation.login.LoginPage
 import cd.zgeniuscoders.zwallet.auth.presentation.register.RegisterPage
 import cd.zgeniuscoders.zwallet.expense.presentation.main.MainPage
+import cd.zgeniuscoders.zwallet.expense.presentation.splash_screen.SplashScreen
 
 @Composable
 fun Navigation(
@@ -21,8 +22,14 @@ fun Navigation(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = Route.LoginPage
+        startDestination = Route.SplashScreen
     ) {
+        composable<Route.SplashScreen> {
+            SplashScreen(
+                navController = navController
+            )
+        }
+
         composable<Route.LoginPage> {
             LoginPage(
                 navController = navController,
