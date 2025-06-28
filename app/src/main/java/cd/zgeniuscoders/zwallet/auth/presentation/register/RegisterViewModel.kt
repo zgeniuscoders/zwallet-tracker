@@ -8,7 +8,9 @@ import androidx.lifecycle.viewModelScope
 import cd.zgeniuscoders.zwallet.auth.domains.models.Register
 import cd.zgeniuscoders.zwallet.auth.domains.models.User
 import cd.zgeniuscoders.zwallet.auth.domains.services.AuthenticationService
+import cd.zgeniuscoders.zwallet.core.utils.Constant
 import cd.zgeniuscoders.zwallet.core.utils.Response
+import cd.zgeniuscoders.zwallet.shared.domains.services.LocalStorageService
 import cd.zgeniuscoders.zwallet.shared.domains.services.UserService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -19,7 +21,8 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     var authService: AuthenticationService,
-    var userService: UserService
+    var userService: UserService,
+    var localStorageService: LocalStorageService
 ) : ViewModel() {
 
     var state by mutableStateOf(RegisterState())
@@ -92,7 +95,11 @@ class RegisterViewModel @Inject constructor(
                             isLoading = false
                         )
 
-                        is Response.Success -> state.copy(isLoading = false, isRegistered = true)
+                        is Response.Success -> {
+                            localStorageService.add(data.id, Constant.USER_ID)
+                            localStorageService.add(true, Constant.IS_AUTHENTICATED)
+                            state.copy(isLoading = false, isRegistered = true)
+                        }
                     }
                 }.launchIn(viewModelScope)
         }

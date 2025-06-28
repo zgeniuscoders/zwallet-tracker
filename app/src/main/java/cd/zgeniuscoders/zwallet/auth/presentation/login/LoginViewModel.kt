@@ -7,7 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cd.zgeniuscoders.zwallet.auth.domains.models.Login
 import cd.zgeniuscoders.zwallet.auth.domains.services.AuthenticationService
+import cd.zgeniuscoders.zwallet.core.utils.Constant
 import cd.zgeniuscoders.zwallet.core.utils.Response
+import cd.zgeniuscoders.zwallet.shared.domains.services.LocalStorageService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
@@ -18,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private var authenticationService: AuthenticationService
+    private var authenticationService: AuthenticationService,
+    private var localStorageService: LocalStorageService
 ) : ViewModel() {
 
     var state by mutableStateOf(LoginState())
@@ -55,6 +58,8 @@ class LoginViewModel @Inject constructor(
 
                         is Response.Success -> {
                             withContext(Dispatchers.Main) {
+                                localStorageService.add(res.data.toString(), Constant.USER_ID)
+                                localStorageService.add(true, Constant.IS_AUTHENTICATED)
                                 state = state.copy(
                                     isLoading = false, email = "", password = "", isLogged = true
                                 )
