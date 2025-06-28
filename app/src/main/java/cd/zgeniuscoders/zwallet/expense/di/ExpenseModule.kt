@@ -1,0 +1,22 @@
+package cd.zgeniuscoders.zwallet.expense.di
+
+import cd.zgeniuscoders.zwallet.expense.data.ExpenseServiceImpl
+import cd.zgeniuscoders.zwallet.expense.domain.services.ExpenseService
+import com.google.firebase.firestore.FirebaseFirestore
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+object expenseModule {
+
+    @Provides
+    @Singleton
+    fun provideExpenseService(db: FirebaseFirestore): ExpenseService {
+        return ExpenseServiceImpl(db)
+    }
+
+}
