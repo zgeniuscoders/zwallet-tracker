@@ -36,8 +36,10 @@ fun RegisterPage(
 
 
     LaunchedEffect(state.isRegistered) {
-        navController.navigate(Route.MainPage) {
-            popUpTo(Route.LoginPage) { inclusive = true }
+        if (state.isRegistered) {
+            navController.navigate(Route.MainPage) {
+                popUpTo(Route.LoginPage) { inclusive = true }
+            }
         }
     }
 
@@ -65,138 +67,142 @@ fun RegisterBody(
 ) {
 
     Scaffold(
-        snackbarHost = { SnackbarHost(snackbarHostState) }
-    ) { innerP ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerP)
-                .padding(24.dp)
-        ) {
-            IconButton(
-                onClick = { navController.navigate(Route.LoginPage) },
-                modifier = Modifier.padding(bottom = 16.dp)
-            ) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Retour")
-            }
-
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                AnimatedVisibility(
-                    visible = true,
-                    enter = fadeIn() + slideInVertically()
-                ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+        topBar = {
+            TopAppBar(
+                title = {},
+                navigationIcon = {
+                    IconButton(
+                        onClick = { navController.navigate(Route.LoginPage) },
+                        modifier = Modifier.padding(bottom = 16.dp)
                     ) {
-                        Text(
-                            text = "Créer un compte",
-                            style = MaterialTheme.typography.headlineMedium,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.padding(bottom = 32.dp)
-                        )
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Retour")
                     }
                 }
+            )
+        }
+    ) { innerP ->
 
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(innerP)
+                .padding(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            AnimatedVisibility(
+                visible = true,
+                enter = fadeIn() + slideInVertically()
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Column(
-                        modifier = Modifier.padding(24.dp),
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
-                    ) {
-                        OutlinedTextField(
-                            value = state.username,
-                            onValueChange = { onEvent(RegisterEvent.OnUsernameChange(it)) },
-                            label = { Text("Nom complet") },
-                            leadingIcon = { Icon(Icons.Default.Person, contentDescription = null) },
-                            modifier = Modifier.fillMaxWidth(),
-                            singleLine = true
-                        )
+                    Text(
+                        text = "Créer un compte",
+                        style = MaterialTheme.typography.headlineMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.padding(bottom = 32.dp)
+                    )
+                }
+            }
 
-                        OutlinedTextField(
-                            value = state.email,
-                            onValueChange = { onEvent(RegisterEvent.OnEmailChange(it)) },
-                            label = { Text("Email") },
-                            leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                            modifier = Modifier.fillMaxWidth(),
-                            singleLine = true
-                        )
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+            ) {
+                Column(
+                    modifier = Modifier.padding(24.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    OutlinedTextField(
+                        value = state.username,
+                        onValueChange = { onEvent(RegisterEvent.OnUsernameChange(it)) },
+                        label = { Text("Nom complet") },
+                        leadingIcon = { Icon(Icons.Default.Person, contentDescription = null) },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true
+                    )
 
-                        OutlinedTextField(
-                            value = state.password,
-                            onValueChange = { onEvent(RegisterEvent.OnPasswordChange(it)) },
-                            label = { Text("Mot de passe") },
-                            leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
-                            trailingIcon = {
-                                IconButton(onClick = { onEvent(RegisterEvent.OnHiddenPassword) }) {
-                                    Icon(
-                                        if (state.hiddenPassword) Icons.Default.VisibilityOff else Icons.Default.Visibility,
-                                        contentDescription = if (state.hiddenPassword) "Masquer" else "Afficher"
-                                    )
-                                }
-                            },
-                            visualTransformation = if (state.hiddenPassword) VisualTransformation.None else PasswordVisualTransformation(),
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                            modifier = Modifier.fillMaxWidth(),
-                            singleLine = true
-                        )
+                    OutlinedTextField(
+                        value = state.email,
+                        onValueChange = { onEvent(RegisterEvent.OnEmailChange(it)) },
+                        label = { Text("Email") },
+                        leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true
+                    )
 
-                        OutlinedTextField(
-                            value = state.confirmPassword,
-                            onValueChange = { onEvent(RegisterEvent.OnConfirmPasswordChange(it)) },
-                            label = { Text("Confirmer le mot de passe") },
-                            leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
-                            trailingIcon = {
-                                IconButton(onClick = {
-                                    onEvent(RegisterEvent.OnHiddenConfirmPassword)
-                                }) {
-                                    Icon(
-                                        if (state.hiddenConfirmPassword) Icons.Default.VisibilityOff else Icons.Default.Visibility,
-                                        contentDescription = if (state.hiddenConfirmPassword) "Masquer" else "Afficher"
-                                    )
-                                }
-                            },
-                            visualTransformation = if (state.hiddenConfirmPassword) VisualTransformation.None else PasswordVisualTransformation(),
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                            modifier = Modifier.fillMaxWidth(),
-                            singleLine = true,
-                            isError = state.confirmPassword.isNotEmpty() && state.password != state.confirmPassword
-                        )
-
-                        if (state.confirmPassword.isNotEmpty() && state.password != state.confirmPassword) {
-                            Text(
-                                text = "Les mots de passe ne correspondent pas",
-                                color = MaterialTheme.colorScheme.error,
-                                style = MaterialTheme.typography.bodySmall
-                            )
-                        }
-
-                        Button(
-                            onClick = {
-                                onEvent(RegisterEvent.OnRegister)
-                            },
-                            modifier = Modifier.fillMaxWidth(),
-                            enabled = !state.isLoading
-                        ) {
-                            if (state.isLoading) {
-                                CircularProgressIndicator(
-                                    modifier = Modifier.size(20.dp),
-                                    color = MaterialTheme.colorScheme.onPrimary
+                    OutlinedTextField(
+                        value = state.password,
+                        onValueChange = { onEvent(RegisterEvent.OnPasswordChange(it)) },
+                        label = { Text("Mot de passe") },
+                        leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
+                        trailingIcon = {
+                            IconButton(onClick = { onEvent(RegisterEvent.OnHiddenPassword) }) {
+                                Icon(
+                                    if (state.hiddenPassword) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                                    contentDescription = if (state.hiddenPassword) "Masquer" else "Afficher"
                                 )
-                            } else {
-                                Text("S'inscrire")
                             }
+                        },
+                        visualTransformation = if (state.hiddenPassword) VisualTransformation.None else PasswordVisualTransformation(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true
+                    )
+
+                    OutlinedTextField(
+                        value = state.confirmPassword,
+                        onValueChange = { onEvent(RegisterEvent.OnConfirmPasswordChange(it)) },
+                        label = { Text("Confirmer le mot de passe") },
+                        leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
+                        trailingIcon = {
+                            IconButton(onClick = {
+                                onEvent(RegisterEvent.OnHiddenConfirmPassword)
+                            }) {
+                                Icon(
+                                    if (state.hiddenConfirmPassword) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                                    contentDescription = if (state.hiddenConfirmPassword) "Masquer" else "Afficher"
+                                )
+                            }
+                        },
+                        visualTransformation = if (state.hiddenConfirmPassword) VisualTransformation.None else PasswordVisualTransformation(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true,
+                        isError = state.confirmPassword.isNotEmpty() && state.password != state.confirmPassword
+                    )
+
+                    if (state.confirmPassword.isNotEmpty() && state.password != state.confirmPassword) {
+                        Text(
+                            text = "Les mots de passe ne correspondent pas",
+                            color = MaterialTheme.colorScheme.error,
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                    }
+
+                    Button(
+                        onClick = {
+                            onEvent(RegisterEvent.OnRegister)
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                        enabled = !state.isLoading
+                    ) {
+                        if (state.isLoading) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(20.dp),
+                                color = MaterialTheme.colorScheme.onPrimary
+                            )
+                        } else {
+                            Text("S'inscrire")
                         }
                     }
                 }
             }
         }
+
     }
 }

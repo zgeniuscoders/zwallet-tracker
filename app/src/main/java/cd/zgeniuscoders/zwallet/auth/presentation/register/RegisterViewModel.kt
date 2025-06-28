@@ -42,24 +42,28 @@ class RegisterViewModel @Inject constructor(
 
     fun register() {
         viewModelScope.launch {
-            state = state.copy(isLoading = true)
-            var data = Register(
-                email = state.email,
-                password = state.password,
-                username = state.username
-            )
-            authService.register(data)
-                .onEach { res ->
-                    state = when (res) {
-                        is Response.Error -> {
-                            state.copy(isLoading = false, errorMessage = res.message.toString())
-                        }
+            try {
+                state = state.copy(isLoading = true)
+                var data = Register(
+                    email = state.email,
+                    password = state.password,
+                    username = state.username
+                )
+                authService.register(data)
+                    .onEach { res ->
+                        state = when (res) {
+                            is Response.Error -> {
+                                state.copy(isLoading = false, errorMessage = res.message.toString())
+                            }
 
-                        is Response.Success -> {
-                            state.copy(isLoading = false, isRegistered = true)
+                            is Response.Success -> {
+                                state.copy(isLoading = false, isRegistered = true)
+                            }
                         }
-                    }
-                }.launchIn(viewModelScope)
+                    }.launchIn(viewModelScope)
+            } catch (e: Exception) {
+                state = state.copy(errorMessage = e.message.toString(), isLoading = false)
+            }
         }
     }
 
