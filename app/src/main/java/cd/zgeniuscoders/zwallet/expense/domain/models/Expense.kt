@@ -1,6 +1,6 @@
-package cd.zgeniuscoders.zwallet.domain.models
+package cd.zgeniuscoders.zwallet.expense.domain.models
 
-import cd.zgeniuscoders.zwallet.domain.enums.ExpenseCategory
+import cd.zgeniuscoders.zwallet.expense.domain.enums.ExpenseCategory
 import java.time.LocalDateTime
 
 data class Expense(

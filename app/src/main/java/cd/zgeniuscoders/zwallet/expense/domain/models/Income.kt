@@ -1,4 +1,4 @@
-package cd.zgeniuscoders.zwallet.domain.models
+package cd.zgeniuscoders.zwallet.expense.domain.models
 
 import java.time.LocalDateTime
 
