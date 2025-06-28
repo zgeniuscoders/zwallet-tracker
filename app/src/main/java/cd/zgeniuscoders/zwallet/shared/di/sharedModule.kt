@@ -1,11 +1,15 @@
 package cd.zgeniuscoders.zwallet.shared.di
 
+import android.content.Context
+import cd.zgeniuscoders.zwallet.shared.data.DatastoreLocalStorageServiceImpl
 import cd.zgeniuscoders.zwallet.shared.data.UserServiceImpl
+import cd.zgeniuscoders.zwallet.shared.domains.services.LocalStorageService
 import cd.zgeniuscoders.zwallet.shared.domains.services.UserService
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -23,5 +27,11 @@ object shareModule {
     @Singleton
     fun provideUserService(db: FirebaseFirestore): UserService {
         return UserServiceImpl(db)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLocalStorageService(@ApplicationContext context: Context): LocalStorageService {
+        return DatastoreLocalStorageServiceImpl(context)
     }
 }
