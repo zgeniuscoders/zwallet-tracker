@@ -4,19 +4,19 @@ import cd.zgeniuscoders.zwallet.auth.domains.models.Login
 import cd.zgeniuscoders.zwallet.auth.domains.models.Register
 import cd.zgeniuscoders.zwallet.auth.domains.services.AuthenticationService
 import cd.zgeniuscoders.zwallet.core.utils.Response
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
-class AuthenticationService : AuthenticationService{
+class AuthenticationServiceImpl(
+    private var auth: FirebaseAuth
+) : AuthenticationService {
 
-    private var auth = Firebase.auth
 
     override fun getCurrentUserUuid(): String? {
         return auth.currentUser?.uid
