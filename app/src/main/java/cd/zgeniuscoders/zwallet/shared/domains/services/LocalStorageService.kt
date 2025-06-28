@@ -1,4 +1,5 @@
 package cd.zgeniuscoders.zwallet.shared.domains.services
+
 import kotlinx.coroutines.flow.Flow
 
 interface LocalStorageService {
@@ -7,7 +8,7 @@ interface LocalStorageService {
 
     suspend fun add(data: Boolean, key: String)
 
-    suspend fun <T> get(key: String): Flow<T>
+    suspend fun <T> get(key: String, defaultValue: T): Flow<T>
 
     suspend fun set(key: String, data: String)
 

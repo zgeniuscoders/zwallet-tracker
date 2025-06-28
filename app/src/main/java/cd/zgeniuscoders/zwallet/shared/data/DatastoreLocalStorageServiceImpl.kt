@@ -29,7 +29,7 @@ class DatastoreLocalStorageServiceImpl(
         }
     }
 
-    override suspend fun <T> get(key: String): Flow<T> {
+    override suspend fun <T> get(key: String, defaultValue: T): Flow<T> {
 
         var appKey = if (checkType<String>(key)) {
             stringPreferencesKey(key)
@@ -40,8 +40,9 @@ class DatastoreLocalStorageServiceImpl(
         }
 
         val prefs: Flow<T> = context.preferences.data.map { prefs ->
-            prefs[appKey] as T
+            (prefs[appKey] as? T) ?: defaultValue
         }
+
 
         return prefs
     }
