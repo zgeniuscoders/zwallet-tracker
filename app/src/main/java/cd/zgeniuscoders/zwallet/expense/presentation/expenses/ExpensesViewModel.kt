@@ -46,7 +46,7 @@ class ExpensesViewModel @Inject constructor(
     fun getExpenses() {
         viewModelScope.launch {
             state = state.copy(isLoading = false, message = "")
-            localStorageService.get<String>(Constant.USER_ID)
+            localStorageService.get<String>(Constant.USER_ID, "")
                 .collect {
                     expenseService
                         .getExpenses(it)
@@ -77,7 +77,7 @@ class ExpensesViewModel @Inject constructor(
     fun addExpense(data: Expense) {
         viewModelScope.launch {
             state = state.copy(message = "")
-            localStorageService.get<String>(Constant.USER_ID)
+            localStorageService.get<String>(Constant.USER_ID, "")
                 .collect { res ->
                     var date = LocalDateTime.now().toString()
                     val newData = data.copy(userId = res, date = date)

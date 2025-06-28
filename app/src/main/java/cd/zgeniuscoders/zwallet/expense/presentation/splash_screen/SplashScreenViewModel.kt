@@ -30,7 +30,7 @@ class SplashScreenViewModel @Inject constructor(
         viewModelScope.launch {
             withContext(Dispatchers.Main) {
                 localStorageService
-                    .get<Boolean>(Constant.IS_AUTHENTICATED)
+                    .get<Boolean>(Constant.IS_AUTHENTICATED, false)
                     .collect { res ->
                         Log.i("ZWALLET_INFO", res.toString())
                         state = state.copy(isAuthenticated = res)
