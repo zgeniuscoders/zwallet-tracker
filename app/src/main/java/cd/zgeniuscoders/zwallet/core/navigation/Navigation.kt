@@ -1,5 +1,6 @@
 package cd.zgeniuscoders.zwallet.core.navigation
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -14,7 +15,8 @@ import cd.zgeniuscoders.zwallet.expense.presentation.main.MainPage
 @Composable
 fun Navigation(
     modifier: Modifier,
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    snackBar: SnackbarHostState = SnackbarHostState()
 ) {
     NavHost(
         modifier = modifier,
@@ -35,12 +37,8 @@ fun Navigation(
 
         composable<Route.RegisterPage> {
             RegisterPage(
-                onNavigateToLogin = { navController.popBackStack() },
-                onNavigateToMain = {
-                    navController.navigate(Route.MainPage) {
-                        popUpTo(Route.LoginPage) { inclusive = true }
-                    }
-                }
+                navController = navController,
+                snackBar = snackBar
             )
         }
 
