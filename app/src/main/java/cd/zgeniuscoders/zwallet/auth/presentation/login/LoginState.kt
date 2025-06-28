@@ -1,4 +1,4 @@
-package cd.zgeniuscoders.floapp.ui.screens.login
+package cd.zgeniuscoders.zwallet.auth.presentation.login
 
 data class LoginState(
     var isLoading: Boolean = false,

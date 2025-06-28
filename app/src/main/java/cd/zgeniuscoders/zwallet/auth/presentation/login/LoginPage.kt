@@ -21,130 +21,172 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import cd.zgeniuscoders.zwallet.auth.domains.models.Login
+import cd.zgeniuscoders.zwallet.core.navigation.Route
+
+@Composable
+fun LoginPage(
+    navController: NavController,
+    snackbarHostState: SnackbarHostState
+) {
+
+    val vm = hiltViewModel<LoginViewModel>()
+    val state = vm.state
+
+    LaunchedEffect(state.isLogged) {
+        if (state.isLogged) {
+            navController.navigate(Route.MainPage) {
+                popUpTo(Route.LoginPage) { inclusive = true }
+            }
+        }
+    }
+
+    LaunchedEffect(state.errorMessages) {
+        if (state.errorMessages.isNotBlank()) {
+            snackbarHostState.showSnackbar(message = state.errorMessages)
+        }
+    }
+
+    LoginBody(
+        vm::onEvent, vm.state, navController = navController, snackbarHostState = snackbarHostState
+    )
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginPage(
-    onNavigateToRegister: () -> Unit,
-    onNavigateToForgotPassword: () -> Unit,
-    onNavigateToMain: () -> Unit
+fun LoginBody(
+    onEvent: (event: LoginEvent) -> Unit,
+    state: LoginState,
+    navController: NavController,
+    snackbarHostState: SnackbarHostState
 ) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var passwordVisible by remember { mutableStateOf(false) }
-    var isLoading by remember { mutableStateOf(false) }
+    var email = state.email
+    var password = state.password
+    var passwordVisible = state.isPasswordVisible
+    var isLoading = state.isLoading
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        AnimatedVisibility(
-            visible = true,
-            enter = fadeIn() + slideInVertically()
+    Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) }
+    ) { innerP ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerP)
+                .padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
+            AnimatedVisibility(
+                visible = true,
+                enter = fadeIn() + slideInVertically()
             ) {
-                Text(
-                    text = "💰",
-                    fontSize = 64.sp,
-                    modifier = Modifier.padding(bottom = 16.dp)
-                )
-                
-                Text(
-                    text = "Expense Tracker",
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
-                )
-                
-                Text(
-                    text = "Gérez vos finances intelligemment",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(top = 8.dp, bottom = 32.dp)
-                )
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "💰",
+                        fontSize = 64.sp,
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
+
+                    Text(
+                        text = "ZWallet Tracker",
+                        style = MaterialTheme.typography.headlineMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+
+                    Text(
+                        text = "Gérez vos finances intelligemment",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(top = 8.dp, bottom = 32.dp)
+                    )
+                }
             }
-        }
 
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
-        ) {
-            Column(
-                modifier = Modifier.padding(24.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
             ) {
-                OutlinedTextField(
-                    value = email,
-                    onValueChange = { email = it },
-                    label = { Text("Email") },
-                    leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true
-                )
-
-                OutlinedTextField(
-                    value = password,
-                    onValueChange = { password = it },
-                    label = { Text("Mot de passe") },
-                    leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
-                    trailingIcon = {
-                        IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                            Icon(
-                                if (passwordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility,
-                                contentDescription = if (passwordVisible) "Masquer" else "Afficher"
-                            )
-                        }
-                    },
-                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true
-                )
-
-                TextButton(
-                    onClick = onNavigateToForgotPassword,
-                    modifier = Modifier.align(Alignment.End)
+                Column(
+                    modifier = Modifier.padding(24.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    Text("Mot de passe oublié ?")
-                }
+                    OutlinedTextField(
+                        value = email,
+                        onValueChange = { onEvent(LoginEvent.OnEmailChange(it)) },
+                        label = { Text("Email") },
+                        leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true
+                    )
 
-                Button(
-                    onClick = {
-                        isLoading = true
-                        // Simulation de connexion
-                        onNavigateToMain()
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    enabled = email.isNotBlank() && password.isNotBlank() && !isLoading
-                ) {
-                    if (isLoading) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.size(20.dp),
-                            color = MaterialTheme.colorScheme.onPrimary
-                        )
-                    } else {
-                        Text("Se connecter")
+                    OutlinedTextField(
+                        value = password,
+                        onValueChange = { onEvent(LoginEvent.OnPasswordChange(it)) },
+                        label = { Text("Mot de passe") },
+                        leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
+                        trailingIcon = {
+                            IconButton(onClick = { onEvent(LoginEvent.OnTogglePassword) }) {
+                                Icon(
+                                    if (passwordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                                    contentDescription = if (passwordVisible) "Masquer" else "Afficher"
+                                )
+                            }
+                        },
+                        visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true
+                    )
+
+                    TextButton(
+                        onClick = {
+                            navController.navigate(Route.ForgotPasswordPage)
+                        },
+                        modifier = Modifier.align(Alignment.End)
+                    ) {
+                        Text("Mot de passe oublié ?")
                     }
-                }
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text("Pas de compte ? ")
-                    TextButton(onClick = onNavigateToRegister) {
-                        Text("S'inscrire")
+                    Button(
+                        onClick = {
+                            onEvent(LoginEvent.OnLogin)
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                        enabled = email.isNotBlank() && password.isNotBlank() && !isLoading
+                    ) {
+                        if (isLoading) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(20.dp),
+                                color = MaterialTheme.colorScheme.onPrimary
+                            )
+                        } else {
+                            Text("Se connecter")
+                        }
+                    }
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text("Pas de compte ? ")
+                        TextButton(onClick = {
+                            navController.navigate(Route.RegisterPage)
+                        }) {
+                            Text("S'inscrire")
+                        }
                     }
                 }
             }
         }
     }
+
+
 }

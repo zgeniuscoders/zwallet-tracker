@@ -25,13 +25,8 @@ fun Navigation(
     ) {
         composable<Route.LoginPage> {
             LoginPage(
-                onNavigateToRegister = { navController.navigate(Route.RegisterPage) },
-                onNavigateToForgotPassword = { navController.navigate(Route.ForgotPasswordPage) },
-                onNavigateToMain = {
-                    navController.navigate(Route.MainPage) {
-                        popUpTo(Route.LoginPage) { inclusive = true }
-                    }
-                }
+                navController = navController,
+                snackbarHostState = snackBar
             )
         }
 
