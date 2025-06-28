@@ -17,6 +17,7 @@ navigationCompose = "2.9.0"
 googleGmsGoogleServices = "4.4.3"
 firebaseAuth = "23.2.1"
 firebaseFirestore = "25.1.4"
+datastorePreferences = "1.1.4"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -42,6 +43,8 @@ hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", ve
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
