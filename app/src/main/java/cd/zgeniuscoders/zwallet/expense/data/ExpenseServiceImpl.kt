@@ -1,5 +1,6 @@
 package cd.zgeniuscoders.zwallet.expense.data
 
+import android.util.Log
 import cd.zgeniuscoders.zwallet.core.utils.Response
 import cd.zgeniuscoders.zwallet.expense.domain.models.Expense
 import cd.zgeniuscoders.zwallet.expense.domain.services.ExpenseService
@@ -49,12 +50,12 @@ class ExpenseServiceImpl(
     override fun addExpense(data: Expense): Flow<Response<Boolean>> = callbackFlow {
         try {
             var docId = collection.document().id
-            data.copy(id = docId)
+            var newData = data.copy(id = docId)
             collection
                 .document(data.userId)
                 .collection("expenses")
-                .document(data.id)
-                .set(data)
+                .document(newData.id)
+                .set(newData)
                 .addOnFailureListener {
                     trySend(Response.Error(message = it.message.toString()))
                 }.addOnSuccessListener {
