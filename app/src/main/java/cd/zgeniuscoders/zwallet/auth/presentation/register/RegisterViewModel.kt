@@ -6,8 +6,10 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cd.zgeniuscoders.zwallet.auth.domains.models.Register
+import cd.zgeniuscoders.zwallet.auth.domains.models.User
 import cd.zgeniuscoders.zwallet.auth.domains.services.AuthenticationService
 import cd.zgeniuscoders.zwallet.core.utils.Response
+import cd.zgeniuscoders.zwallet.shared.domains.services.UserService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -16,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    var authService: AuthenticationService
+    var authService: AuthenticationService,
+    var userService: UserService
 ) : ViewModel() {
 
     var state by mutableStateOf(RegisterState())
@@ -43,7 +46,7 @@ class RegisterViewModel @Inject constructor(
     fun register() {
         viewModelScope.launch {
             try {
-                state = state.copy(isLoading = true)
+                state = state.copy(isLoading = true, errorMessage = "")
                 var data = Register(
                     email = state.email,
                     password = state.password,
@@ -51,19 +54,47 @@ class RegisterViewModel @Inject constructor(
                 )
                 authService.register(data)
                     .onEach { res ->
-                        state = when (res) {
+                        when (res) {
                             is Response.Error -> {
-                                state.copy(isLoading = false, errorMessage = res.message.toString())
+                                state = state.copy(
+                                    isLoading = false,
+                                    errorMessage = res.message.toString()
+                                )
                             }
 
                             is Response.Success -> {
-                                state.copy(isLoading = false, isRegistered = true)
+                                var user = res.data
+                                if (user != null) {
+                                    saveUser(user)
+                                }
                             }
                         }
                     }.launchIn(viewModelScope)
             } catch (e: Exception) {
                 state = state.copy(errorMessage = e.message.toString(), isLoading = false)
             }
+        }
+    }
+
+    private fun saveUser(register: Register) {
+        viewModelScope.launch {
+            var data = User(
+                id = register.uuid.toString(),
+                username = register.username,
+                email = register.username
+            )
+            userService
+                .addUser(data)
+                .onEach { res ->
+                    state = when (res) {
+                        is Response.Error -> state.copy(
+                            errorMessage = res.message.toString(),
+                            isLoading = false
+                        )
+
+                        is Response.Success -> state.copy(isLoading = false, isRegistered = true)
+                    }
+                }.launchIn(viewModelScope)
         }
     }
 
