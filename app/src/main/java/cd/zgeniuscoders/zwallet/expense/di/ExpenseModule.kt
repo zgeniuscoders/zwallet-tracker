@@ -2,8 +2,10 @@ package cd.zgeniuscoders.zwallet.expense.di
 
 import cd.zgeniuscoders.zwallet.expense.data.DebtServiceImpl
 import cd.zgeniuscoders.zwallet.expense.data.ExpenseServiceImpl
+import cd.zgeniuscoders.zwallet.expense.data.IncomeServiceImpl
 import cd.zgeniuscoders.zwallet.expense.domain.services.DebtService
 import cd.zgeniuscoders.zwallet.expense.domain.services.ExpenseService
+import cd.zgeniuscoders.zwallet.expense.domain.services.IncomeService
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
@@ -25,6 +27,13 @@ object expenseModule {
     @Singleton
     fun provideDebtService(db: FirebaseFirestore): DebtService {
         return DebtServiceImpl(db)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideIncomeService(db: FirebaseFirestore): IncomeService {
+        return IncomeServiceImpl(db)
     }
 
 }
