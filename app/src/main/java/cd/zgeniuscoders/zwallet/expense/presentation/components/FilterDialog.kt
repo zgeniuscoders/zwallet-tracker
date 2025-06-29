@@ -1,4 +1,4 @@
-package cd.zgeniuscoders.zwallet.expense.presentation.expenses.components
+package cd.zgeniuscoders.zwallet.expense.presentation.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
