@@ -1,10 +1,9 @@
 package cd.zgeniuscoders.zwallet.expense.domain.models
 
-import java.time.LocalDateTime
-
 data class Income(
     val id: String = "",
-    val amount: Double,
-    val description: String,
-    val date: LocalDateTime = LocalDateTime.now()
+    val userId: String = "",
+    val amount: Double = 0.0,
+    val description: String = "",
+    val date: String = ""
 )
