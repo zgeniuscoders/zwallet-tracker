@@ -1,4 +1,4 @@
-package cd.zgeniuscoders.zwallet.expense.domain.models
+package cd.zgeniuscoders.zwallet.income.domain.models
 
 data class Income(
     val id: String = "",
