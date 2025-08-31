@@ -39,10 +39,10 @@ class LoginViewModel @Inject constructor(
 
     private fun login() {
 
-        state = state.copy(isLoading = true)
+        state = state.copy(isLoading = true, errorMessages = "")
 
         viewModelScope.launch {
-            var data = Login(state.email, state.password)
+            val data = Login(state.email, state.password)
             authenticationService.login(data)
                 .onEach { res ->
 
