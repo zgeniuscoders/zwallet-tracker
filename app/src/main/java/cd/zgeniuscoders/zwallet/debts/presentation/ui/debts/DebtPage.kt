@@ -72,7 +72,7 @@ fun DebtsBody(state: DebtState, onEvent: (DebtEvent) -> Unit) {
                             color = Color(0xFFD32F2F)
                         )
                         Text(
-                            text = "${String.format("%.2f", totalMyDebts)} €",
+                            text = "${String.format("%.2f", totalMyDebts)} CDF",
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold,
                             color = Color(0xFFD32F2F)
@@ -94,7 +94,7 @@ fun DebtsBody(state: DebtState, onEvent: (DebtEvent) -> Unit) {
                             color = Color(0xFF388E3C)
                         )
                         Text(
-                            text = "${String.format("%.2f", totalOthersDebts)} €",
+                            text = "${String.format("%.2f", totalOthersDebts)} CDF",
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold,
                             color = Color(0xFF388E3C)

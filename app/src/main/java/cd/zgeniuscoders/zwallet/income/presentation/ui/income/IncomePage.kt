@@ -93,7 +93,7 @@ fun IncomeBody(state: IncomeState, onEvent: (IncomeEvent) -> Unit) {
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                             Text(
-                                text = "+${String.format("%.2f", totalIncome)} €",
+                                text = "+${String.format("%.2f", totalIncome)} CDF",
                                 style = MaterialTheme.typography.headlineMedium,
                                 fontWeight = FontWeight.Bold,
                                 color = Color(0xFF4CAF50)

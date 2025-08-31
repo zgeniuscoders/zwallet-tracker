@@ -77,7 +77,7 @@ fun ExpensesBody(state: ExpensesState, onEvent: (ExpensesEvent) -> Unit) {
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Text(
-                            text = "${String.format("%.2f", totalExpenses)} €",
+                            text = "${String.format("%.2f", totalExpenses)} CDF",
                             style = MaterialTheme.typography.headlineMedium,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.primary

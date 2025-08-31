@@ -34,7 +34,7 @@ fun AddIncomeDialog(
                 OutlinedTextField(
                     value = amount,
                     onValueChange = { amount = it },
-                    label = { Text("Montant (€)") },
+                    label = { Text("Montant (CDF)") },
                     modifier = Modifier.fillMaxWidth()
                 )
 
