@@ -7,11 +7,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import cd.zgeniuscoders.zwallet.auth.presentation.forgot_password.ForgotPasswordPage
-import cd.zgeniuscoders.zwallet.auth.presentation.login.LoginPage
-import cd.zgeniuscoders.zwallet.auth.presentation.register.RegisterPage
-import cd.zgeniuscoders.zwallet.expense.presentation.main.MainPage
-import cd.zgeniuscoders.zwallet.expense.presentation.splash_screen.SplashScreen
+import cd.zgeniuscoders.zwallet.modules.auth.presentation.forgot_password.ForgotPasswordPage
+import cd.zgeniuscoders.zwallet.modules.auth.presentation.login.LoginPage
+import cd.zgeniuscoders.zwallet.modules.auth.presentation.register.RegisterPage
+import cd.zgeniuscoders.zwallet.modules.expense.presentation.ui.main.MainPage
+import cd.zgeniuscoders.zwallet.modules.expense.presentation.ui.splash_screen.SplashScreen
 
 @Composable
 fun Navigation(
