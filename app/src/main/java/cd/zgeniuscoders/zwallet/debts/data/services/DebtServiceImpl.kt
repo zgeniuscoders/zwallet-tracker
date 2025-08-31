@@ -1,6 +1,8 @@
 package cd.zgeniuscoders.zwallet.debts.data.services
 
 import cd.zgeniuscoders.zwallet.core.utils.Response
+import cd.zgeniuscoders.zwallet.debts.data.mappers.toDebtDomainList
+import cd.zgeniuscoders.zwallet.debts.data.network.DebtDto
 import cd.zgeniuscoders.zwallet.debts.domain.models.Debt
 import cd.zgeniuscoders.zwallet.debts.domain.services.DebtService
 import com.google.firebase.firestore.FirebaseFirestore
@@ -29,10 +31,10 @@ class DebtServiceImpl(
                     }
 
                     if (value != null) {
-                        var debts = value.toObjects(Debt::class.java)
+                        val debts = value.toObjects(DebtDto::class.java)
                         trySend(
                             Response.Success(
-                                debts
+                                debts.toDebtDomainList()
                             )
                         )
                     }
