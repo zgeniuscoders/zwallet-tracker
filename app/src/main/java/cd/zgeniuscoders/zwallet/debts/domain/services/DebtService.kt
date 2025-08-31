@@ -1,8 +1,7 @@
-package cd.zgeniuscoders.zwallet.expense.domain.services
+package cd.zgeniuscoders.zwallet.debts.domain.services
 
 import cd.zgeniuscoders.zwallet.core.utils.Response
-import cd.zgeniuscoders.zwallet.expense.domain.models.Debt
-import cd.zgeniuscoders.zwallet.expense.domain.models.Expense
+import cd.zgeniuscoders.zwallet.debts.domain.models.Debt
 import kotlinx.coroutines.flow.Flow
 
 interface DebtService {

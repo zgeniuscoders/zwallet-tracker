@@ -1,11 +1,11 @@
 package cd.zgeniuscoders.zwallet.expense.di
 
-import cd.zgeniuscoders.zwallet.expense.data.DebtServiceImpl
+import cd.zgeniuscoders.zwallet.debts.data.services.DebtServiceImpl
 import cd.zgeniuscoders.zwallet.expense.data.ExpenseServiceImpl
 import cd.zgeniuscoders.zwallet.income.data.services.IncomeServiceImpl
-import cd.zgeniuscoders.zwallet.expense.domain.services.DebtService
+import cd.zgeniuscoders.zwallet.debts.domain.services.DebtService
 import cd.zgeniuscoders.zwallet.expense.domain.services.ExpenseService
-import cd.zgeniuscoders.zwallet.expense.domain.services.IncomeService
+import cd.zgeniuscoders.zwallet.income.domain.services.IncomeService
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides

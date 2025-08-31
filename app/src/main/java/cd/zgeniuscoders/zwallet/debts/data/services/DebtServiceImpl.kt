@@ -1,11 +1,8 @@
-package cd.zgeniuscoders.zwallet.expense.data
+package cd.zgeniuscoders.zwallet.debts.data.services
 
-import android.util.Log
 import cd.zgeniuscoders.zwallet.core.utils.Response
-import cd.zgeniuscoders.zwallet.expense.domain.models.Debt
-import cd.zgeniuscoders.zwallet.expense.domain.models.Expense
-import cd.zgeniuscoders.zwallet.expense.domain.services.DebtService
-import cd.zgeniuscoders.zwallet.expense.domain.services.ExpenseService
+import cd.zgeniuscoders.zwallet.debts.domain.models.Debt
+import cd.zgeniuscoders.zwallet.debts.domain.services.DebtService
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow

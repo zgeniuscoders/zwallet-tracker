@@ -1,6 +1,4 @@
-package cd.zgeniuscoders.zwallet.expense.domain.models
-
-import java.time.LocalDateTime
+package cd.zgeniuscoders.zwallet.debts.domain.models
 
 data class Debt(
     val id: String = "",
