@@ -5,14 +5,12 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 fun String.formatDate(): String? {
-    val inputFormater = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS")
     val outputFormater = DateTimeFormatter.ofPattern("d/mm/yyyy")
     val dateTime = LocalDateTime.parse(this)
     return dateTime.format(outputFormater)
 }
 
 fun String.toLocalDate(): LocalDateTime {
-    val inputFormater = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS")
-    val localDateTime = LocalDateTime.parse(this, inputFormater)
+    val localDateTime = LocalDateTime.parse(this)
     return localDateTime
 }
