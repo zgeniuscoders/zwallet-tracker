@@ -19,7 +19,7 @@ import androidx.navigation.compose.rememberNavController
 import cd.zgeniuscoders.zwallet.core.navigation.Route
 import cd.zgeniuscoders.zwallet.core.utils.fromRoute
 import cd.zgeniuscoders.zwallet.expense.presentation.dashboard.DashboardPage
-import cd.zgeniuscoders.zwallet.expense.presentation.debts.DebtsPage
+import cd.zgeniuscoders.zwallet.debts.presentation.ui.debts.DebtsPage
 import cd.zgeniuscoders.zwallet.expense.presentation.expenses.ExpensesPage
 import cd.zgeniuscoders.zwallet.income.presentation.ui.income.IncomePage
 import cd.zgeniuscoders.zwallet.expense.presentation.profile.ProfilePage

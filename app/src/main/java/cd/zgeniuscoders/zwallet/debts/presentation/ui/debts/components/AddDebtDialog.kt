@@ -1,5 +1,6 @@
-package cd.zgeniuscoders.zwallet.expense.presentation.debts.components
+package cd.zgeniuscoders.zwallet.debts.presentation.ui.debts.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,7 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import cd.zgeniuscoders.zwallet.expense.domain.models.Debt
+import cd.zgeniuscoders.zwallet.debts.domain.models.Debt
 import java.time.LocalDateTime
 
 @Composable

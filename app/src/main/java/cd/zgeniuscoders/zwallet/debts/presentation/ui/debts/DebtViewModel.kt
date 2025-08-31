@@ -1,4 +1,4 @@
-package cd.zgeniuscoders.zwallet.expense.presentation.debts
+package cd.zgeniuscoders.zwallet.debts.presentation.ui.debts
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -7,8 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cd.zgeniuscoders.zwallet.core.utils.Constant
 import cd.zgeniuscoders.zwallet.core.utils.Response
-import cd.zgeniuscoders.zwallet.expense.domain.models.Debt
-import cd.zgeniuscoders.zwallet.expense.domain.services.DebtService
+import cd.zgeniuscoders.zwallet.debts.domain.models.Debt
+import cd.zgeniuscoders.zwallet.debts.domain.services.DebtService
+import cd.zgeniuscoders.zwallet.debts.presentation.mappers.toDebtUiModel
 import cd.zgeniuscoders.zwallet.shared.domains.services.LocalStorageService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -44,7 +45,7 @@ class DebtViewModel @Inject constructor(
             localStorageService
                 .get<String>(Constant.USER_ID, "")
                 .collect {
-                    var newDebt = debt.copy(userId = it)
+                    val newDebt = debt.copy(userId = it)
                     debtService
                         .addDebt(newDebt)
                         .onEach { res ->
@@ -82,18 +83,18 @@ class DebtViewModel @Inject constructor(
                                 }
 
                                 is Response.Success -> {
-                                    var debts = res.data
+                                    val debts = res.data
 
                                     if (debts != null) {
 
-                                        var myDebts = debts.filter { it.isOwedByMe && !it.isPaid }
+                                        val myDebts = debts.filter { it.isOwedByMe && !it.isPaid }
                                         val othersDebts =
                                             debts.filter { !it.isOwedByMe && !it.isPaid }
 
                                         state =
                                             state.copy(
-                                                myDebts = myDebts,
-                                                othersDebts = othersDebts,
+                                                myDebts = myDebts.toDebtUiModel(),
+                                                othersDebts = othersDebts.toDebtUiModel(),
                                                 isLoading = false
                                             )
                                     }

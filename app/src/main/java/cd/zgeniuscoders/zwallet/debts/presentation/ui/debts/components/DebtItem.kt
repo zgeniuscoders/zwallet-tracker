@@ -1,4 +1,4 @@
-package cd.zgeniuscoders.zwallet.expense.presentation.debts.components
+package cd.zgeniuscoders.zwallet.debts.presentation.ui.debts.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,27 +32,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cd.zgeniuscoders.zwallet.core.utils.toLocalDate
-import cd.zgeniuscoders.zwallet.expense.domain.models.Debt
+import cd.zgeniuscoders.zwallet.debts.domain.models.Debt
+import cd.zgeniuscoders.zwallet.debts.presentation.models.DebtUi
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @Composable
 fun DebtItem(
-    debt: Debt,
+    debt: DebtUi,
     onMarkAsPaid: () -> Unit,
     onSetReminder: () -> Unit
 ) {
-    val isOverdue = debt.dueDate.toLocalDate().isBefore(LocalDateTime.now())
-    val cardColor = when {
-        isOverdue -> Color(0xFFFFEBEE)
-        debt.dueDate.toLocalDate().isBefore(LocalDateTime.now().plusDays(7)) -> Color(0xFFFFF3E0)
-        else -> MaterialTheme.colorScheme.surface
-    }
+    val isOverdue = debt.isOverdue
 
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-        colors = CardDefaults.cardColors(containerColor = cardColor)
     ) {
         Column(
             modifier = Modifier.padding(16.dp)
@@ -84,7 +79,7 @@ fun DebtItem(
 
                     Column {
                         Text(
-                            text = debt.creditorName,
+                            text = debt.creditor,
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold
                         )
@@ -119,7 +114,7 @@ fun DebtItem(
                             )
                         }
                         Text(
-                            text = debt.dueDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                            text = debt.date,
                             style = MaterialTheme.typography.bodySmall,
                             color = if (isOverdue) Color(0xFFD32F2F) else MaterialTheme.colorScheme.onSurfaceVariant
                         )

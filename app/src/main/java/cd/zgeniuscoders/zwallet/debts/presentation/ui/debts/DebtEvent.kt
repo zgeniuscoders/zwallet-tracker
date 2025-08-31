@@ -1,6 +1,6 @@
-package cd.zgeniuscoders.zwallet.expense.presentation.debts
+package cd.zgeniuscoders.zwallet.debts.presentation.ui.debts
 
-import cd.zgeniuscoders.zwallet.expense.domain.models.Debt
+import cd.zgeniuscoders.zwallet.debts.domain.models.Debt
 
 sealed interface DebtEvent {
     data object OnAddDebtDialog : DebtEvent
