@@ -1,4 +1,4 @@
-package cd.zgeniuscoders.zwallet.expense.domain.services
+package cd.zgeniuscoders.zwallet.income.domain.services
 
 import cd.zgeniuscoders.zwallet.core.utils.Response
 import cd.zgeniuscoders.zwallet.income.domain.models.Income

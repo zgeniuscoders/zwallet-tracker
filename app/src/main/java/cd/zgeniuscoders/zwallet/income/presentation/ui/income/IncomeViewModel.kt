@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import cd.zgeniuscoders.zwallet.core.utils.Constant
 import cd.zgeniuscoders.zwallet.core.utils.Response
 import cd.zgeniuscoders.zwallet.income.domain.models.Income
-import cd.zgeniuscoders.zwallet.expense.domain.services.IncomeService
+import cd.zgeniuscoders.zwallet.income.domain.services.IncomeService
 import cd.zgeniuscoders.zwallet.income.presentation.mappers.toIncomeUiList
 import cd.zgeniuscoders.zwallet.shared.domains.services.LocalStorageService
 import dagger.hilt.android.lifecycle.HiltViewModel

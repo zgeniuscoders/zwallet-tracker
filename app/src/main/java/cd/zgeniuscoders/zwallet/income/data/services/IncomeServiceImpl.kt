@@ -2,7 +2,7 @@ package cd.zgeniuscoders.zwallet.income.data.services
 
 import cd.zgeniuscoders.zwallet.core.utils.Response
 import cd.zgeniuscoders.zwallet.income.domain.models.Income
-import cd.zgeniuscoders.zwallet.expense.domain.services.IncomeService
+import cd.zgeniuscoders.zwallet.income.domain.services.IncomeService
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
