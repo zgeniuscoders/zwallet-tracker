@@ -1,7 +1,8 @@
-package cd.zgeniuscoders.zwallet.expense.presentation.income
+package cd.zgeniuscoders.zwallet.income.presentation.ui.income
 
 import cd.zgeniuscoders.zwallet.expense.domain.enums.FilterPeriod
-import cd.zgeniuscoders.zwallet.expense.domain.models.Income
+import cd.zgeniuscoders.zwallet.income.domain.models.Income
+import cd.zgeniuscoders.zwallet.income.presentation.models.IncomeUi
 
 data class IncomeState(
     var isLoading: Boolean = false,
@@ -9,5 +10,5 @@ data class IncomeState(
     var showAddIncomeDialog: Boolean = false,
     var showFilterDialog: Boolean = false,
     var selectedFilter: FilterPeriod = FilterPeriod.MONTH,
-    var incomes: List<Income> = emptyList()
+    var incomes: List<IncomeUi> = emptyList()
 )

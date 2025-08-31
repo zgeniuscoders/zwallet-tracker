@@ -1,4 +1,4 @@
-package cd.zgeniuscoders.zwallet.expense.presentation.income
+package cd.zgeniuscoders.zwallet.income.presentation.ui.income
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,13 +16,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import cd.zgeniuscoders.zwallet.expense.presentation.components.FilterDialog
-import cd.zgeniuscoders.zwallet.expense.presentation.income.components.AddIncomeDialog
-import cd.zgeniuscoders.zwallet.expense.presentation.income.components.IncomeItem
+import cd.zgeniuscoders.zwallet.income.presentation.ui.income.components.AddIncomeDialog
+import cd.zgeniuscoders.zwallet.income.presentation.ui.income.components.IncomeItem
 
 @Composable
 fun IncomePage(modifier: Modifier = Modifier) {
-    var vm = hiltViewModel<IncomeViewModel>()
-    var state = vm.state
+    val vm = hiltViewModel<IncomeViewModel>()
+    val state = vm.state
 
     IncomeBody(
         state,
@@ -34,8 +34,8 @@ fun IncomePage(modifier: Modifier = Modifier) {
 @Composable
 fun IncomeBody(state: IncomeState, onEvent: (IncomeEvent) -> Unit) {
     var showAddIncomeDialog = state.showAddIncomeDialog
-    var showFilterDialog = state.showFilterDialog
-    var selectedFilter = state.selectedFilter
+    val showFilterDialog = state.showFilterDialog
+    val selectedFilter = state.selectedFilter
 
     val incomes = state.incomes
 
@@ -54,7 +54,7 @@ fun IncomeBody(state: IncomeState, onEvent: (IncomeEvent) -> Unit) {
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { showAddIncomeDialog = true },
+                onClick = { onEvent(IncomeEvent.OnShowAddIncomeDialog) },
                 containerColor = Color(0xFF4CAF50)
             ) {
                 Icon(Icons.Default.Add, contentDescription = "Ajouter une recette")

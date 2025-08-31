@@ -1,4 +1,4 @@
-package cd.zgeniuscoders.zwallet.expense.presentation.income.components
+package cd.zgeniuscoders.zwallet.income.presentation.ui.income.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,12 +16,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cd.zgeniuscoders.zwallet.core.utils.formatDate
-import cd.zgeniuscoders.zwallet.expense.domain.models.Income
+import cd.zgeniuscoders.zwallet.income.domain.models.Income
+import cd.zgeniuscoders.zwallet.income.presentation.models.IncomeUi
 import java.time.format.DateTimeFormatter
 
 
 @Composable
-fun IncomeItem(income: Income) {
+fun IncomeItem(income: IncomeUi) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
@@ -40,14 +41,14 @@ fun IncomeItem(income: Income) {
                     fontWeight = FontWeight.Medium
                 )
                 Text(
-                    text = income.date.formatDate().toString(),
+                    text = income.date,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
 
             Text(
-                text = "+${String.format("%.2f", income.amount)} €",
+                text = income.amountFormat,
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF4CAF50)

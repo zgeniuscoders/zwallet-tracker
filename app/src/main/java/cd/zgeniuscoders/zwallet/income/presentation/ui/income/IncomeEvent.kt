@@ -1,7 +1,7 @@
-package cd.zgeniuscoders.zwallet.expense.presentation.income
+package cd.zgeniuscoders.zwallet.income.presentation.ui.income
 
 import cd.zgeniuscoders.zwallet.expense.domain.enums.FilterPeriod
-import cd.zgeniuscoders.zwallet.expense.domain.models.Income
+import cd.zgeniuscoders.zwallet.income.domain.models.Income
 
 sealed interface IncomeEvent {
     data object OnShowAddIncomeDialog : IncomeEvent

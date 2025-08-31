@@ -1,4 +1,4 @@
-package cd.zgeniuscoders.zwallet.expense.presentation.income
+package cd.zgeniuscoders.zwallet.income.presentation.ui.income
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -7,8 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cd.zgeniuscoders.zwallet.core.utils.Constant
 import cd.zgeniuscoders.zwallet.core.utils.Response
-import cd.zgeniuscoders.zwallet.expense.domain.models.Income
+import cd.zgeniuscoders.zwallet.income.domain.models.Income
 import cd.zgeniuscoders.zwallet.expense.domain.services.IncomeService
+import cd.zgeniuscoders.zwallet.income.presentation.mappers.toIncomeUiList
 import cd.zgeniuscoders.zwallet.shared.domains.services.LocalStorageService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -60,9 +61,9 @@ class IncomeViewModel @Inject constructor(
                                 }
 
                                 is Response.Success -> {
-                                    var incomes = res.data
+                                    val incomes = res.data
                                     if (incomes != null) {
-                                        state = state.copy(incomes = incomes)
+                                        state = state.copy(incomes = incomes.toIncomeUiList())
                                     }
                                     state = state.copy(isLoading = false)
                                 }
@@ -79,7 +80,7 @@ class IncomeViewModel @Inject constructor(
             state = state.copy(message = "")
             localStorageService.get<String>(Constant.USER_ID, "")
                 .collect { res ->
-                    var date = LocalDateTime.now().toString()
+                    val date = LocalDateTime.now().toString()
                     val newData = income.copy(userId = res, date = date)
                     incomeService.addIncome(newData)
                         .onEach { res ->
