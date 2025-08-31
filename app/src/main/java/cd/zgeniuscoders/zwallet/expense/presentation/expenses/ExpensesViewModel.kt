@@ -10,6 +10,7 @@ import cd.zgeniuscoders.zwallet.core.utils.Constant
 import cd.zgeniuscoders.zwallet.core.utils.Response
 import cd.zgeniuscoders.zwallet.expense.domain.models.Expense
 import cd.zgeniuscoders.zwallet.expense.domain.services.ExpenseService
+import cd.zgeniuscoders.zwallet.expense.presentation.mappers.toExpenseUiModel
 import cd.zgeniuscoders.zwallet.shared.domains.services.LocalStorageService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -60,9 +61,9 @@ class ExpensesViewModel @Inject constructor(
                                 }
 
                                 is Response.Success -> {
-                                    var expenses = res.data
+                                    val expenses = res.data
                                     if (expenses != null) {
-                                        state = state.copy(expenses = expenses)
+                                        state = state.copy(expenses = expenses.toExpenseUiModel())
                                     }
                                     state = state.copy(isLoading = false)
                                 }

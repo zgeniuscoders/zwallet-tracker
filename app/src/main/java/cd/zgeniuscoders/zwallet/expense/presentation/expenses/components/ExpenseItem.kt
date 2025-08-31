@@ -21,11 +21,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cd.zgeniuscoders.zwallet.core.utils.formatDate
 import cd.zgeniuscoders.zwallet.expense.domain.models.Expense
+import cd.zgeniuscoders.zwallet.expense.presentation.models.ExpenseUi
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun ExpenseItem(expense: Expense) {
+fun ExpenseItem(expense: ExpenseUi) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
@@ -45,7 +46,7 @@ fun ExpenseItem(expense: Expense) {
                     modifier = Modifier
                         .size(12.dp)
                         .clip(CircleShape)
-                        .background(expense.category.color)
+                        .background(expense.color)
                 )
 
                 Column {
@@ -62,7 +63,7 @@ fun ExpenseItem(expense: Expense) {
                         )
                     }
                     Text(
-                        text = expense.date.formatDate().toString(),
+                        text = expense.date,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -73,13 +74,13 @@ fun ExpenseItem(expense: Expense) {
                 horizontalAlignment = Alignment.End
             ) {
                 Text(
-                    text = "-${String.format("%.2f", expense.amount)} €",
+                    text = expense.amountFormat,
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Bold,
-                    color = expense.category.color
+                    color = expense.color
                 )
                 Text(
-                    text = expense.category.displayName,
+                    text = expense.category,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

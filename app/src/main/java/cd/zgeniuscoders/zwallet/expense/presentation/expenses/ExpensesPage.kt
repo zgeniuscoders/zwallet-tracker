@@ -19,9 +19,9 @@ import cd.zgeniuscoders.zwallet.expense.presentation.components.FilterDialog
 
 @Composable
 fun ExpensesPage() {
-    var vm = hiltViewModel<ExpensesViewModel>()
-    var state = vm.state
-    var onEvent = vm::onEvent
+    val vm = hiltViewModel<ExpensesViewModel>()
+    val state = vm.state
+    val onEvent = vm::onEvent
 
     ExpensesBody(state, onEvent)
 }
@@ -29,8 +29,8 @@ fun ExpensesPage() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExpensesBody(state: ExpensesState, onEvent: (ExpensesEvent) -> Unit) {
-    var showAddExpenseDialog = state.showAddExpenseDialog
-    var showFilterDialog = state.showFilterDialog
+    val showAddExpenseDialog = state.showAddExpenseDialog
+    val showFilterDialog = state.showFilterDialog
     var selectedFilter by remember { mutableStateOf(FilterPeriod.MONTH) }
 
     val expenses = state.expenses
